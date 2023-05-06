@@ -1,11 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
-
+import { useState, useEffect } from "react";
 
 const SideNav = () => {
+    const [isNavOpen, setIsNavOpen] = useState()
+    const [isWindowSmall, setIsWindowSmall] = useState()
+    
+    
+    useEffect(() => {
+        const handleResize = () => {
+            const screenWidth = window.innerWidth;
+            if(screenWidth < 1024) {
+                setIsWindowSmall(true)
+            } else setIsWindowSmall(false)
+        }
+        
+        window.addEventListener("resize", handleResize);
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+    },[])
+    
     return (
           <>
-            <div className="lg:hidden absolute top-10 left-10 z-30">
+            <div onClick={() => {
+                if(isWindowSmall) setIsNavOpen(true)
+            }} className="lg:hidden absolute top-10 left-10 z-30">
                 <Image
                     src="https://cdn-icons-png.flaticon.com/512/7710/7710488.png"
                     width={32}
@@ -13,7 +33,17 @@ const SideNav = () => {
                     alt="hamburger icon"
                 />
             </div>
-            <aside className="bg-black fixed top-0 left-0 h-full z-50 lg:z-0 lg:relative text-white lg:rounded-3xl lg:p-12 flex flex-col justify-between">
+            <aside className="bg-black p-5 fixed top-0 left-0 h-full z-50 lg:z-0 lg:relative text-white lg:rounded-3xl lg:p-12 flex flex-col justify-between">
+                <div onClick={() => {
+                    if(isWindowSmall) setIsNavOpen(false)
+                }} className="lg:hidden block">
+                    <Image
+                        src="https://cdn-icons-png.flaticon.com/512/458/458595.png"
+                        width={20}
+                        height={20}
+                        alt="cross icon"
+                    />
+                </div>
                 <div className="flex flex-col gap-10">
                     <Link href="/" className="text-4xl font-bold">Board.</Link>
                     <ul className="flex flex-col gap-7">

@@ -2,7 +2,7 @@ const Schedule = () => {
     return (
         <div className="p-8 rounded-xl bg-white p-8 rounded-xl">
           <div className="flex items-center mb-5 justify-between">
-          <h1 className="font-bold text-lg">Today's schedule</h1>
+          <h1 className="font-bold text-lg">Today&apos;s schedule</h1>
             <span className="text-sm cursor-pointer opacity-40">
                 See All&nbsp;
                 <span className="font-bold">&gt;</span>

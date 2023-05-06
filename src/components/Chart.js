@@ -66,11 +66,23 @@ const Chart = () => {
    useEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth;
-      const newAspectRatio = screenWidth < 768 ? 1 : 4; // Adjust aspect ratio based on screen width
+      let newAspectRatio;
+      if(screenWidth < 768 && screenWidth > 600) {
+        newAspectRatio = 3;
+      } else if (screenWidth < 600 && screenWidth > 450) {
+        newAspectRatio = 2
+      } else if (screenWidth < 450) {
+        newAspectRatio = 1
+      }
+       else if (screenWidth > 768) {
+        newAspectRatio = 4
+      }
+  
       setChartOptions((prevOptions) => ({
         ...prevOptions,
-        aspectRatio: newAspectRatio,
+        aspectRatio: newAspectRatio
       }));
+      
     };
 
     window.addEventListener("resize", handleResize);
@@ -81,7 +93,7 @@ const Chart = () => {
    
   
     return (
-        <div style={{ height: "400px" }} className={`bg-white p-10 rounded-xl ${lato.className}`}>
+        <div className={`bg-white p-10 rounded-xl ${lato.className}`}>
             <h2 className="font-bold text-lg">Activities</h2>
             {data && <Line data={data} className="max-w-full" options={chartOptions} />}
         </div>
