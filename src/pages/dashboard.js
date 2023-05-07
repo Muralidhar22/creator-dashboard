@@ -17,7 +17,7 @@ const Dashboard = () => {
             </div>
                 <div>
                     <div className="mb-8 flex md:block gap-2">
-                        <SideNav />
+                        <div className="lg:hidden"><SideNav /></div>
                         <NavBar />
                     </div>
                     <div className={`grid grid-cols-1 sm:grid-cols2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-8 ${lato.className}`}>
