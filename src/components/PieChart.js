@@ -24,7 +24,7 @@ const getPosition = () => {
         newAspectRatio = 3
         position = "bottom"
       } else if (screenWidth < 450) {
-        newAspectRatio = 0.5
+        newAspectRatio = 1
         position = "bottom"
       } else if (screenWidth > 768) {
         newAspectRatio = 2.25
@@ -106,7 +106,7 @@ const PieChart = () => {
         newAspectRatio = 3
         position = "bottom"
       } else if (screenWidth < 450) {
-        newAspectRatio = 0.5
+        newAspectRatio = 1
         position = "bottom"
       } else if (screenWidth > 768) {
         newAspectRatio = 2.25

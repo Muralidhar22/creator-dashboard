@@ -12,9 +12,12 @@ const Dashboard = () => {
     return (
         <>
            <div className="lg:grid lg:grid-cols-[0.2fr_1fr] gap-16 p-2 md:p-5 lg:p-10 min-h-screen">
+            <div className="hidden lg:block">   
                 <SideNav /> 
+            </div>
                 <div>
-                    <div className="mb-8">
+                    <div className="mb-8 flex md:block gap-2">
+                        <SideNav />
                         <NavBar />
                     </div>
                     <div className={`grid grid-cols-1 sm:grid-cols2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-8 ${lato.className}`}>

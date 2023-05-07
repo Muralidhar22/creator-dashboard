@@ -30,7 +30,7 @@ const SideNav = () => {
           <>
             <div onClick={() => {
                 if(isWindowSmall) setIsNavOpen(true)
-            }} className="lg:hidden absolute cursor-pointer top-7 cursor-pointer left-10 z-30">
+            }} className="lg:hidden cursor-pointer cursor-pointer">
                 <Image
                     src="https://cdn-icons-png.flaticon.com/512/7710/7710488.png"
                     width={32}
