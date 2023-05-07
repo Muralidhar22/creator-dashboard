@@ -4,7 +4,7 @@ import {
     Tooltip,
     Legend
 } from "chart.js";
-
+import { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 
 ChartJs.register(
@@ -15,6 +15,7 @@ ChartJs.register(
 
 const options = {
     aspectRatio: 2.25,
+    responsive: true,
     plugins: {
         legend: {
           position: 'right',
@@ -67,12 +68,40 @@ const data = {
 }
 
 const PieChart = () => {
+    const [chartOptions, setChartOptions] = useState(options)
+  
+    useEffect(() => {
+      const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      let newAspectRatio;
+      
+      if(screenWidth < 768 && screenWidth > 450) {
+        newAspectRatio = 3
+      } else if (screenWidth < 450) {
+        newAspectRatio = 0.5
+      } else if (screenWidth > 768) {
+        newAspectRatio = 4
+      }
+      
+      setChartOptions((prevOptions) => ({
+        ...prevOptions,
+        aspectRatio: newAspectRatio
+      }));
+      
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+    },[])
+  
     return (
-        <div className="bg-white p-8 rounded-xl w-full">
+        <div className="bg-white p-8 pb-16 rounded-xl w-full">
           <h2 className="text-lg font-bold mb-2">Top products</h2>
             <Pie
                 data={data}
-                options={options}
+                options={chartOptions}
                 className="block"
             ></Pie>
         </div>

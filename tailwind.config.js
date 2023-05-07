@@ -11,6 +11,9 @@ module.exports = {
       'lato': ['Lato', 'sans-serif'],
     },
     extend: {
+      transitionProperty: {
+        'width': 'width'
+      }
     },
   },
   plugins: [],

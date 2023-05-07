@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const SideNav = () => {
-    const [isNavOpen, setIsNavOpen] = useState()
-    const [isWindowSmall, setIsWindowSmall] = useState()
+    const [isNavOpen, setIsNavOpen] = useState(false)
+    const [isWindowSmall, setIsWindowSmall] = useState(false)
     
     
     useEffect(() => {
@@ -14,6 +14,11 @@ const SideNav = () => {
                 setIsWindowSmall(true)
             } else setIsWindowSmall(false)
         }
+        
+        const screenWidth = window.innerWidth;
+        if(screenWidth < 1024) {
+            setIsWindowSmall(true)
+        } else setIsWindowSmall(false)
         
         window.addEventListener("resize", handleResize);
         return () => {
@@ -25,7 +30,7 @@ const SideNav = () => {
           <>
             <div onClick={() => {
                 if(isWindowSmall) setIsNavOpen(true)
-            }} className="lg:hidden absolute top-10 left-10 z-30">
+            }} className="lg:hidden absolute cursor-pointer top-7 cursor-pointer left-10 z-30">
                 <Image
                     src="https://cdn-icons-png.flaticon.com/512/7710/7710488.png"
                     width={32}
@@ -33,10 +38,10 @@ const SideNav = () => {
                     alt="hamburger icon"
                 />
             </div>
-            <aside className="bg-black p-5 fixed top-0 left-0 h-full z-50 lg:z-0 lg:relative text-white lg:rounded-3xl lg:p-12 flex flex-col justify-between">
+            <aside className={`${(!isNavOpen && isWindowSmall) && "-translate-x-full"} bg-black transition-transform p-5 fixed top-0 left-0 h-full z-50 lg:z-0 lg:relative text-white lg:rounded-3xl lg:p-12 flex flex-col justify-between`}>
                 <div onClick={() => {
                     if(isWindowSmall) setIsNavOpen(false)
-                }} className="lg:hidden block">
+                }} className="lg:hidden block cursor-pointer">
                     <Image
                         src="https://cdn-icons-png.flaticon.com/512/458/458595.png"
                         width={20}
@@ -119,7 +124,7 @@ const SideNav = () => {
                 </div>
                 <div className="text-sm flex flex-col gap-2">
                     <div>Help</div>
-                     <div>Contact Us</div>
+                    <div>Contact Us</div>
                 </div>
             </aside>
         </>
