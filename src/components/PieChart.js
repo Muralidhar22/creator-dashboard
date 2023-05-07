@@ -13,13 +13,39 @@ ChartJs.register(
     Legend
 )
 
+const getPosition = () => {
+  let newAspectRatio = 1;
+  let position = "right";
+  let align = "center";
+  if(typeof window !== "undefined") {
+    const screenWidth = window.innerWidth;
+      
+      if(screenWidth < 768 && screenWidth > 450) {
+        newAspectRatio = 3
+        position = "bottom"
+      } else if (screenWidth < 450) {
+        newAspectRatio = 0.5
+        position = "bottom"
+      } else if (screenWidth > 768) {
+        newAspectRatio = 2.25
+        position = "right"
+      }
+    return {
+      newAspectRatio, position, align
+    }
+  }
+  return {
+      newAspectRatio, position, align
+    }
+}
+
 const options = {
-    aspectRatio: 2.25,
+    aspectRatio: getPosition().newAspectRatio,
     responsive: true,
     plugins: {
         legend: {
-          position: 'right',
-          align: 'center',
+          position: getPosition().position,
+          align: getPosition().align,
           labels: {
             generateLabels: (chart) => {
                 const data = chart.data || {};
@@ -48,7 +74,7 @@ const options = {
             usePointStyle: true,
             font: {
                 family: "Lato", // Set the font family
-                size: 16, // Set the font size
+                size: 12, // Set the font size
                 weight: "bold",
             }
           }
@@ -69,23 +95,35 @@ const data = {
 
 const PieChart = () => {
     const [chartOptions, setChartOptions] = useState(options)
-  
+    
     useEffect(() => {
       const handleResize = () => {
       const screenWidth = window.innerWidth;
-      let newAspectRatio;
+      let newAspectRatio, position, align;
+      align = "center"
       
       if(screenWidth < 768 && screenWidth > 450) {
         newAspectRatio = 3
+        position = "bottom"
       } else if (screenWidth < 450) {
         newAspectRatio = 0.5
+        position = "bottom"
       } else if (screenWidth > 768) {
-        newAspectRatio = 4
+        newAspectRatio = 2.25
+        position = "right"
       }
       
       setChartOptions((prevOptions) => ({
         ...prevOptions,
-        aspectRatio: newAspectRatio
+        aspectRatio: newAspectRatio,
+        plugins: {
+          ...prevOptions.plugins,
+          legend: {
+            position,
+            align,
+            ...prevOptions.plugins.legend
+          }
+        }
       }));
       
     };

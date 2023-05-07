@@ -11,6 +11,24 @@ ChartJs.register(
     Title, Tooltip, LineElement, Legend, CategoryScale, LinearScale, PointElement
 )
 
+const getAspectRatio = () => {
+  if(typeof window !== "undefined") {
+    const screenWidth = window.innerWidth;
+        if(screenWidth < 768 && screenWidth > 600) {
+          return 3;
+        } else if (screenWidth < 600 && screenWidth > 450) {
+         return 2
+        } else if (screenWidth < 450) {
+          return 1
+        }
+         else if (screenWidth > 768) {
+         return 4
+        }
+  }
+  return 1
+}
+
+
 const data = {
     labels: ["0s", "10s", "20s", "30s", "40s", "50s", "60s"],
     datasets: [
@@ -35,7 +53,7 @@ const data = {
 
 const options =  {
     responsive: true,
-    aspectRatio: 4,
+    aspectRatio: getAspectRatio(),
     scales: {
         x: {
           grid: {
@@ -60,12 +78,22 @@ const options =  {
       },
 }
 
+
 const Chart = () => {
    const [chartOptions, setChartOptions] = useState(options)
    
    useEffect(() => {
     const handleResize = () => {
-      const screenWidth = window.innerWidth;
+      let newAspectRatio = getAspectRatio()
+  
+      setChartOptions((prevOptions) => ({
+        ...prevOptions,
+        aspectRatio: newAspectRatio
+      }));
+      
+    };
+    
+    const screenWidth = window.innerWidth;
       let newAspectRatio;
       if(screenWidth < 768 && screenWidth > 600) {
         newAspectRatio = 3;
@@ -77,13 +105,11 @@ const Chart = () => {
        else if (screenWidth > 768) {
         newAspectRatio = 4
       }
-  
+     
       setChartOptions((prevOptions) => ({
         ...prevOptions,
         aspectRatio: newAspectRatio
       }));
-      
-    };
 
     window.addEventListener("resize", handleResize);
     return () => {
